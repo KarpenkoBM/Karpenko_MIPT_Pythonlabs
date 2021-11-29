@@ -3,34 +3,36 @@ from pygame.draw import *
 from pygame.locals import *
 from random import randint, random
 import pygame.freetype
-
+import json
 pg.init()
 
 FPS = 30
 size_x, size_y = 800, 800
 screen = pg.display.set_mode((size_x, size_y))
-number_of_balls = 1
+number_of_mice = 15
 speed = 9
-ma_balls = list()
+mice = list()
 font = pg.freetype.SysFont('Times New Roman', 35)
 points = 0
 k = 0
 pop_x = 0
 pop_y = 0
 gotcha = False
+table = False
 timer = 0
 seconds = 0
 minutes = 0
-
+catpoints = 0
+n = 0
 
 def sign(x):
-    if (x >= 0):
-        return (1)
+    if x >= 0:
+        return 1
     else:
-        return (-1)
+        return -1
 
 
-class Ball:
+class Mouse:
     def __init__(self, x1, x2, y1, y2):
         self.x = randint(x1, x2)
         self.y = randint(y1, y2)
@@ -61,7 +63,7 @@ class Ball:
             self.vx = randint(-min(abs(speed), self.x),
                               min(abs(speed), 700 - self.r - self.x))
 
-    def draw_ball(self):
+    def draw_mouse(self):
         circle(screen, self.color, (self.x, self.y), self.r)
         circle(screen, self.color, (self.x + 0.75 * self.r * sign(self.vx), self.y + 0.75 * self.r * sign(self.vy)),
                self.r * 0.5)
@@ -70,10 +72,10 @@ class Ball:
         line(screen, self.color, (self.x, self.y),
              (self.x - 1.5 * sign(self.vx) * self.r, self.y - 1.5 * self.r * sign(self.vy)), 3)
 
-    def touch_ma_ball(self, i):
+    def touch_mouse(self, i):
         global points, k, pop_x, pop_y, gotcha
         if (self.x - event.pos[0]) ** 2 + (self.y - event.pos[1]) ** 2 <= self.r ** 2:
-            ma_balls.pop(i)
+            mice.pop(i)
             pop_x = self.x
             pop_y = self.y
             gotcha = True
@@ -81,17 +83,15 @@ class Ball:
             points += 1
 
 
-for i in range(number_of_balls):
-    ma_balls.append(Ball(110, 690, 110, 690))
-    ma_balls[i].draw_ball()
+for i in range(number_of_mice):
+    mice.append(Mouse(110, 690, 110, 690))
+    mice[i].draw_mouse()
 pg.display.update()
 clock = pg.time.Clock()
 finished = False
-while not finished and points != number_of_balls:
+while not finished and points != number_of_mice:
     clock.tick(FPS)
     keys = pg.key.get_pressed()
-    if keys[pg.K_ESCAPE]:
-        finished = True
     for event in pg.event.get():
         if event.type == pg.QUIT:
             finished = True
@@ -101,9 +101,9 @@ while not finished and points != number_of_balls:
                 save_min = minutes
                 save_points = points
                 points = -1
-            for i in range(len(ma_balls) - 1, -1, -1):
+            for i in range(len(mice) - 1, -1, -1):
                 gotcha == False
-                ma_balls[i].touch_ma_ball(i)
+                mice[i].touch_mouse(i)
     pg.display.update()
     screen.fill((255, 255, 255))
     rect(screen, (255, 204, 255), (100, 100, 600, 600))
@@ -122,12 +122,12 @@ while not finished and points != number_of_balls:
     font.render_to(screen, (110, 750), "КОТИК УСТАЛ", (255, 153, 255))
     font.render_to(screen, (510, 20), " ВреМЯУ: " + str(minutes) + ' m ' + str(seconds) + ' s', (255, 153, 255))
     if (gotcha == True) and (k < 7):
-        font.render_to(screen, (pop_x, pop_y), '+1', (255, 153, 255))
+        font.render_to(screen, (pop_x, pop_y), '+1' , (255, 153, 255))
         k += 1
-    for i in range(len(ma_balls)):
-        ma_balls[i].draw_ball()
-        ma_balls[i].move(1)
-        ma_balls[i].reflection()
+    for i in range(len(mice)):
+        mice[i].draw_mouse()
+        mice[i].move(1)
+        mice[i].reflection()
     if points == -1:
         screen.fill((255, 255, 255))
         pg.draw.polygon(screen, (255, 153, 255), ((50, 300), (330, 300), (330, 390), (50, 390)), 10)
@@ -163,7 +163,7 @@ screen.fill((255, 255, 255))
 font.render_to(screen, (100, 100), "Какая кличка у вашего котика? ", (255, 153, 255))
 finished = False
 name = ""
-while not finished:
+while finished is False:
     screen.fill((255, 255, 255))
     font.render_to(screen, (100, 100), "Какая кличка у вашего котика? ", (255, 153, 255))
     for event in pygame.event.get():
@@ -176,6 +176,27 @@ while not finished:
                 name += pygame.key.name(event.key)
         font.render_to(screen, (100, 140), name, (255, 153, 255))
         pygame.display.update()
+catpoints = points * 100 - minutes * 10 - seconds
+with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\record_table.json") as f:
+    data = json.load(f)
+data[name] = catpoints
+screen.fill((255, 255, 255))
+height = 50
+for p, v in data.items():
+    font.render_to(screen, (20, height), "имя котика : " + p + "  его котоочки: " + str(v), (255, 153, 255))
+    height += 40
+    if (event.type == pg.MOUSEBUTTONDOWN) and (event.button == 1) and (event.pos[0] > 100) and (
+            event.pos[0] < 380) and (event.pos[1] > 300) and (event.pos[1] < 390):
+        finished = True
+    pygame.display.update()
+    finished = False
 
+
+while not finished:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            finished = True
+with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\record_table.json", 'w') as f:
+    json.dump(data, f)
 
 pg.quit()
