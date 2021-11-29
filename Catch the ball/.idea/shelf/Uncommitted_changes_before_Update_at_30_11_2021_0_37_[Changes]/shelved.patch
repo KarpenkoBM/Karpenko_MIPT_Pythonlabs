@@ -1,0 +1,8 @@
+Index: record_table.json
+===================================================================
+diff --git a/record_table.json b/record_table.json
+--- a/record_table.json	
++++ b/record_table.json	
+@@ -1,0 +1,1 @@
++{"dfg": 1, "sdfg": 99, "zsdv": 99, "escapeescapeescapeescapeescape": -1, "dfh": 97, "seh": 98, "": 972, "fedd": 93, "xddtdh": 99}
+\ No newline at end of file
