@@ -177,7 +177,7 @@ while finished is False:
         font.render_to(screen, (100, 140), name, (255, 153, 255))
         pygame.display.update()
 catpoints = points * 100 - minutes * 10 - seconds
-with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\record_table.json") as f:
+with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\Catch the ball\record_table.json") as f:
     data = json.load(f)
 data[name] = catpoints
 screen.fill((255, 255, 255))
@@ -196,7 +196,7 @@ while not finished:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             finished = True
-with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\record_table.json", 'w') as f:
+with open(r"C:\Users\Asus\PycharmProjects\Karpenko_MIPT_Pythonlabs\Catch the ball\record_table.json", 'w') as f:
     json.dump(data, f)
 
 pg.quit()
