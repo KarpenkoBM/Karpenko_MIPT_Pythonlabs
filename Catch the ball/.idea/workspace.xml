@@ -41,7 +41,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Catch a mouse.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../real_car_simulation" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RunManager" selected="Python.Catch a mouse">
     <configuration name="Catch a mouse" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -144,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638222936602</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added record_table">
+      <created>1638283116236</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638283116236</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
