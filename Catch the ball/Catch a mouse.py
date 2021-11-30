@@ -66,13 +66,13 @@ class Mouse:
         """
         if (self.x + self.vx + self.r >= 700) or \
                 (self.x + self.vx <= 100):
-            k = randint(1, self.speed)
+            el = randint(1, self.speed)
             self.vx = -sign(self.vx) * k
             self.vy = randint(-self.speed, self.speed)
 
         if (self.y + self.vy + self.r >= 700) or \
                 (self.y + self.vy <= 100):
-            k = randint(1, self.speed)
+            el = randint(1, self.speed)
             self.vy = -sign(self.vy) * k
             self.vx = randint(-min(abs(self.speed), self.x),
                               min(abs(self.speed), 700 - self.r - self.x))
@@ -92,7 +92,7 @@ class Mouse:
              (self.x - 1.5 * sign(self.vx) * self.r,
               self.y - 1.5 * self.r * sign(self.vy)), 3)
 
-    def touch_mouse(self, i):
+    def touch_mouse(self, number_of_rodent):
         """
         Функция лопания мышей
         """
@@ -125,7 +125,7 @@ class Rat(Mouse):
         self.vy = randint(-self.speed, self.speed)
         self.color = (73, 66, 61)
 
-    def touch_mouse(self, i):
+    def touch_mouse(self, number_of_rodent):
         """
         Функция лопания мышей
         """
@@ -175,7 +175,7 @@ while not finished:
                 save_points = points
                 points = -1
             for i in range(len(rodents) - 1, -1, -1):
-                rodents[i].touch_mouse(i) # ловим грызунов
+                rodents[i].touch_mouse(i)  # ловим грызунов
     pg.display.update()
     screen.fill((255, 255, 255))
     rect(screen, (255, 204, 255), (100, 100, 600, 600))
@@ -254,7 +254,7 @@ screen.fill((255, 255, 255))
 height = 50
 for p, v in data.items():  # вывод таблицы с игроками и их котоочками
     font.render_to(screen, (20, height), "имя котика : "
-                   + p + "  его catpoints: " + str(v), (255, 153, 255))
+                   + p + "  его котоочки: " + str(v), (255, 153, 255))
     height += 40
     if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and \
             390 > event.pos[1] > 300 > event.pos[0] > 100:
