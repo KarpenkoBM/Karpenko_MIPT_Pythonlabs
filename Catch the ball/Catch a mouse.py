@@ -67,13 +67,13 @@ class Mouse:
         if (self.x + self.vx + self.r >= 700) or \
                 (self.x + self.vx <= 100):
             el = randint(1, self.speed)
-            self.vx = -sign(self.vx) * k
+            self.vx = -sign(self.vx) * el
             self.vy = randint(-self.speed, self.speed)
 
         if (self.y + self.vy + self.r >= 700) or \
                 (self.y + self.vy <= 100):
             el = randint(1, self.speed)
-            self.vy = -sign(self.vy) * k
+            self.vy = -sign(self.vy) * el
             self.vx = randint(-min(abs(self.speed), self.x),
                               min(abs(self.speed), 700 - self.r - self.x))
 
