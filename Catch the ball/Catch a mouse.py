@@ -53,7 +53,7 @@ class Mouse:
         """
         Функция движения мышей
         """
-        if (self.vx == 0) and (self.vx == 0):
+        if self.vx == 0 and self.vy == 0:
             self.vy = randint(-self.speed, self.speed)
             self.vx = randint(-self.speed, self.speed)
 
@@ -186,7 +186,7 @@ while not finished:
         seconds -= 1
         timer = 0
     if seconds == 0 and minutes != 0:
-        minutes -= 1
+        minutes += 1
         seconds = 59
     if seconds == 0 and minutes == 0:
         finished = True
